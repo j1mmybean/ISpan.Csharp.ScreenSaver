@@ -33,13 +33,10 @@ namespace ISpan.Csharp.ScreenSaver.win
             //获取屏幕的宽度，高度           
             screenWidth = rect.Width;
             screenHeight = rect.Height;
-            string currPath = "C:\\Users\\User\\Pictures\\Acer\\Hello_world.bmp";
-            bitmap = new Bitmap(currPath, true);
-        }
-        private void timer_Tick(object sender, EventArgs e)
-        {
             x = random.Next(screenWidth);
             y = random.Next(screenHeight);
+            string currPath = "C:\\Users\\User\\Pictures\\Acer\\Hello_world.bmp";
+            bitmap = new Bitmap(currPath, true);
             if (x + bitmap.Width > screenWidth)
             {
                 x = screenWidth - bitmap.Width;
@@ -47,6 +44,21 @@ namespace ISpan.Csharp.ScreenSaver.win
             if (y + bitmap.Height > screenHeight)
             {
                 y = screenHeight - bitmap.Height;
+            }
+        }
+        int x0 = 1;
+        int y0 = 1;
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            x += x0;
+            y += y0;
+            if (x + bitmap.Width > screenWidth || x < 0)
+            {
+                x0 = -x0;
+            }
+            if (y + bitmap.Height > screenHeight || y < 0)
+            {
+                y0 = -y0;
             }
             this.Invalidate();
         }
@@ -58,6 +70,7 @@ namespace ISpan.Csharp.ScreenSaver.win
         private void ScreenSaver_MouseMove(object sender, MouseEventArgs e)
         {
             this.TopMost = false;
+            //this.Close();
         }
     }
 }
