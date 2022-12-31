@@ -63,9 +63,9 @@ namespace ISpan.Csharp.ScreenSaver.win.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
-        internal static System.Drawing.Bitmap Hello_world {
+        internal static System.Drawing.Bitmap _753146885b26eb66e334509e8c50b301 {
             get {
-                object obj = ResourceManager.GetObject("Hello_world", resourceCulture);
+                object obj = ResourceManager.GetObject("753146885b26eb66e334509e8c50b301", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

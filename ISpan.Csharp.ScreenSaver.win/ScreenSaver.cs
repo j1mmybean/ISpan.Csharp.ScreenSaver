@@ -18,10 +18,9 @@ namespace ISpan.Csharp.ScreenSaver.win
         }
         private int screenWidth;
         private int screenHeight;
-        private Bitmap bitmap;
         private Random random = new Random();
-        private int x = 0;
-        private int y = 0;
+        private int x_Speed = 5;
+        private int y_Speed = 5;
         Rectangle rect = Screen.PrimaryScreen.Bounds;
         private void ScreenSaver_Load(object sender, EventArgs e)
         {
@@ -30,47 +29,42 @@ namespace ISpan.Csharp.ScreenSaver.win
             this.FormBorderStyle = FormBorderStyle.None;
             this.BackColor = Color.Black;
             this.ShowInTaskbar = false;
-            //获取屏幕的宽度，高度           
             screenWidth = rect.Width;
             screenHeight = rect.Height;
-            x = random.Next(screenWidth);
-            y = random.Next(screenHeight);
-            string currPath = "C:\\Users\\User\\Pictures\\Acer\\Hello_world.bmp";
-            bitmap = new Bitmap(currPath, true);
-            if (x + bitmap.Width > screenWidth)
+            pictureBox.Left = random.Next(screenWidth - pictureBox.Width);
+            pictureBox.Top = random.Next(screenHeight - pictureBox.Height);
+            if (pictureBox.Left < 0)
             {
-                x = screenWidth - bitmap.Width;
+                pictureBox.Left = 0;
             }
-            if (y + bitmap.Height > screenHeight)
+            if (pictureBox.Top < 0)
             {
-                y = screenHeight - bitmap.Height;
+                pictureBox.Top = 0;
             }
         }
-        int x0 = 1;
-        int y0 = 1;
+        int x = 0, y = 0;
         private void timer_Tick(object sender, EventArgs e)
         {
-            x += x0;
-            y += y0;
-            if (x + bitmap.Width > screenWidth || x < 0)
+            Point position = Cursor.Position;
+            if (Math.Abs(position.X - x) + Math.Abs(position.Y - y) > 1000)
+                this.Close();
+            position.X = x;
+            position.Y = y;
+            pictureBox.Left += x_Speed;
+            pictureBox.Top += y_Speed;
+            if (pictureBox.Left > screenWidth - pictureBox.Width || pictureBox.Left < 0)
             {
-                x0 = -x0;
+                x_Speed = -x_Speed;
             }
-            if (y + bitmap.Height > screenHeight || y < 0)
+            if (pictureBox.Top > screenHeight - pictureBox.Height || pictureBox.Top < 0)
             {
-                y0 = -y0;
+                y_Speed = -y_Speed;
             }
-            this.Invalidate();
         }
-        private void ScreenSaver_Paint(object sender, PaintEventArgs e)
-        {
-            e.Graphics.DrawImage(bitmap, x, y, bitmap.Width, bitmap.Height);
-        }
-
-        private void ScreenSaver_MouseMove(object sender, MouseEventArgs e)
-        {
-            this.TopMost = false;
-            //this.Close();
-        }
+        //private async void ScreenSaver_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    this.TopMost = false;
+        //    this.Close();
+        //}
     }
 }
